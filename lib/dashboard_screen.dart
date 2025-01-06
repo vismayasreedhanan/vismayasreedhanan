@@ -1,0 +1,246 @@
+import 'package:flutter/material.dart';
+import 'package:petspaw_admin/clinc.dart';
+
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    _tabController = TabController(length: 6, vsync: this);
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('PetCare Admin'),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                'PetCare Admin',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.dashboard),
+              title: Text('Dashboard'),
+              onTap: () {
+                _tabController.animateTo(0);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.business),
+              title: Text('Clinics'),
+              onTap: () {
+                _tabController.animateTo(1);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.people),
+              title: Text('Staff'),
+              onTap: () {
+                _tabController.animateTo(2);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.analytics),
+              title: Text('Analytics'),
+              onTap: () {
+                _tabController.animateTo(3);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.event),
+              title: Text('Appointments'),
+              onTap: () {
+                _tabController.animateTo(4);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+              onTap: () {
+                _tabController.animateTo(5);
+              },
+            ),
+          ],
+        ),
+      ),
+      body: Expanded(
+        child: TabBarView(
+          controller: _tabController,
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Text(
+                    'Dashboard Overview',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      DashboardCard(
+                        title: 'Total Clinics',
+                        value: '12',
+                        growth: '8%',
+                      ),
+                      DashboardCard(
+                        title: 'Total Patients',
+                        value: '1458',
+                        growth: '12%',
+                      ),
+                      DashboardCard(
+                        title: 'Total Staff',
+                        value: '89',
+                        growth: '5%',
+                      ),
+                      DashboardCard(
+                        title: 'Average Rating',
+                        value: '4.8',
+                        growth: '0.3%',
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'Clinics Overview',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  ListView(
+                    shrinkWrap: true,
+                    children: [
+                      ClinicCard(
+                        name: 'PawCare Central',
+                        location: '123 Main St, New York, NY',
+                        rating: 4.8,
+                        status: 'active',
+                      ),
+                      ClinicCard(
+                        name: 'Happy Tails Clinic',
+                        location: '456 Park Ave, Boston, MA',
+                        rating: 4.6,
+                        status: 'active',
+                      ),
+                      ClinicCard(
+                        name: 'Pet Wellness Center',
+                        location: '789 Oak Rd, Chicago, IL',
+                        rating: 4.9,
+                        status: 'inactive',
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            ClincScreen(),
+            Container(
+              color: Colors.amber,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class DashboardCard extends StatelessWidget {
+  final String title;
+  final String value;
+  final String growth;
+
+  const DashboardCard({
+    required this.title,
+    required this.value,
+    required this.growth,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 3,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            SizedBox(height: 8),
+            Text(value,
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            SizedBox(height: 8),
+            Text('Growth: $growth', style: TextStyle(color: Colors.green)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ClinicCard extends StatelessWidget {
+  final String name;
+  final String location;
+  final double rating;
+  final String status;
+
+  const ClinicCard({
+    required this.name,
+    required this.location,
+    required this.rating,
+    required this.status,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 8),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(name,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            SizedBox(height: 4),
+            Text(location, style: TextStyle(fontSize: 14, color: Colors.grey)),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Rating: $rating', style: TextStyle(fontSize: 14)),
+                Text(status,
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: status == 'active' ? Colors.green : Colors.red)),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
