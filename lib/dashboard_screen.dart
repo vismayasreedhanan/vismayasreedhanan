@@ -14,7 +14,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   @override
   void initState() {
-    _tabController = TabController(length: 6, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
 
     super.initState();
   }
@@ -31,7 +31,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: const Color.fromARGB(255, 22, 169, 66),
               ),
               child: Text(
                 'PetCare Admin',
@@ -76,13 +76,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                 _tabController.animateTo(4);
               },
             ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
-              onTap: () {
-                _tabController.animateTo(5);
-              },
-            ),
           ],
         ),
       ),
@@ -97,7 +90,10 @@ class _DashboardScreenState extends State<DashboardScreen>
                     'Dashboard Overview',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Text("Monitor and manage your pet care clinics"),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -128,7 +124,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                     'Clinics Overview',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(
+                    height: 8,
+                  ),
                   ListView(
                     shrinkWrap: true,
                     children: [
@@ -155,10 +153,16 @@ class _DashboardScreenState extends State<DashboardScreen>
                 ],
               ),
             ),
-            ClincScreen(),
+            Clinics(),
             Container(
-              color: Colors.amber,
-            )
+              color: Colors.black,
+            ),
+            Container(
+              color: Colors.red,
+            ),
+            Container(
+              color: Colors.green,
+            ),
           ],
         ),
       ),
@@ -183,18 +187,22 @@ class DashboardCard extends StatelessWidget {
       elevation: 3,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            SizedBox(height: 8),
-            Text(value,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            SizedBox(height: 8),
-            Text('Growth: $growth', style: TextStyle(color: Colors.green)),
-          ],
+        child: Container(
+          height: 120,
+          width: 130,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              SizedBox(height: 8),
+              Text(value,
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              SizedBox(height: 8),
+              Text('Growth: $growth', style: TextStyle(color: Colors.green)),
+            ],
+          ),
         ),
       ),
     );
@@ -235,7 +243,9 @@ class ClinicCard extends StatelessWidget {
                 Text(status,
                     style: TextStyle(
                         fontSize: 14,
-                        color: status == 'active' ? Colors.green : Colors.red)),
+                        color: status == 'active'
+                            ? const Color.fromARGB(255, 202, 202, 201)
+                            : const Color.fromARGB(255, 30, 170, 37))),
               ],
             ),
           ],
