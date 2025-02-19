@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petspaw_admin/features/home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -58,7 +59,12 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     width: 300.0,
                     child: FilledButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen()));
+                      },
                       child: const Text('login'),
                       style:
                           FilledButton.styleFrom(backgroundColor: Colors.red),

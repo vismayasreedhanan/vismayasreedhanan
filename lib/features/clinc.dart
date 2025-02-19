@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'dashboard_screen.dart';
+import 'home_screen.dart';
 
 class Clinics extends StatelessWidget {
   const Clinics({super.key});

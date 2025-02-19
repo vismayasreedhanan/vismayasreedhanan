@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:petspaw_admin/clinc.dart';
+import 'package:petspaw_admin/features/clinc.dart';
+import 'package:petspaw_admin/features/staff.dart';
 
-class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({super.key});
+import 'appoiments.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen>
+class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -83,88 +86,95 @@ class _DashboardScreenState extends State<DashboardScreen>
         child: TabBarView(
           controller: _tabController,
           children: [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  Text(
-                    'Dashboard Overview',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  Text("Monitor and manage your pet care clinics"),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      DashboardCard(
-                        title: 'Total Clinics',
-                        value: '12',
-                        growth: '8%',
-                      ),
-                      DashboardCard(
-                        title: 'Total Patients',
-                        value: '1458',
-                        growth: '12%',
-                      ),
-                      DashboardCard(
-                        title: 'Total Staff',
-                        value: '89',
-                        growth: '5%',
-                      ),
-                      DashboardCard(
-                        title: 'Average Rating',
-                        value: '4.8',
-                        growth: '0.3%',
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Clinics Overview',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  ListView(
-                    shrinkWrap: true,
-                    children: [
-                      ClinicCard(
-                        name: 'PawCare Central',
-                        location: '123 Main St, New York, NY',
-                        rating: 4.8,
-                        status: 'active',
-                      ),
-                      ClinicCard(
-                        name: 'Happy Tails Clinic',
-                        location: '456 Park Ave, Boston, MA',
-                        rating: 4.6,
-                        status: 'active',
-                      ),
-                      ClinicCard(
-                        name: 'Pet Wellness Center',
-                        location: '789 Oak Rd, Chicago, IL',
-                        rating: 4.9,
-                        status: 'inactive',
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            Dashboard(),
             Clinics(),
-            Container(
-              color: Colors.black,
-            ),
+            StaffManagementView(),
             Container(
               color: Colors.red,
             ),
-            Container(
-              color: Colors.green,
-            ),
+            AppointmentsView(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class Dashboard extends StatelessWidget {
+  const Dashboard({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Text(
+            'Dashboard Overview',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Text("Monitor and manage your pet care clinics"),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              DashboardCard(
+                title: 'Total Clinics',
+                value: '12',
+                growth: '8%',
+              ),
+              DashboardCard(
+                title: 'Total Patients',
+                value: '1458',
+                growth: '12%',
+              ),
+              DashboardCard(
+                title: 'Total Staff',
+                value: '89',
+                growth: '5%',
+              ),
+              DashboardCard(
+                title: 'Average Rating',
+                value: '4.8',
+                growth: '0.3%',
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
+          Text(
+            'Clinics Overview',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          ListView(
+            shrinkWrap: true,
+            children: [
+              ClinicCard(
+                name: 'PawCare Central',
+                location: '123 Main St, New York, NY',
+                rating: 4.8,
+                status: 'active',
+              ),
+              ClinicCard(
+                name: 'Happy Tails Clinic',
+                location: '456 Park Ave, Boston, MA',
+                rating: 4.6,
+                status: 'active',
+              ),
+              ClinicCard(
+                name: 'Pet Wellness Center',
+                location: '789 Oak Rd, Chicago, IL',
+                rating: 4.9,
+                status: 'inactive',
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
