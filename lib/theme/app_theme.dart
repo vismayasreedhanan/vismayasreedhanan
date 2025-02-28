@@ -11,7 +11,7 @@ const Color cardBorderColor = Color(0xFFD8D8D8);
 const Color cardFocusBorderColor = Color.fromARGB(255, 203, 203, 203);
 const Color iconColor = Color(0xFF515866);
 // Primary color (Blue): Used for key interactive elements like buttons, links, and selected states
-const Color primaryColor = Color(0xFF081226);
+const Color primaryColor = Color(0xFF8ED8F3);
 const Color secondaryColor = Color(0xFFF1F3F4);
 
 // Tertiary color (Gray): Used for less important UI elements like disabled states or subtle details
@@ -105,31 +105,31 @@ ThemeData appTheme = ThemeData(
     fillColor: cardBackgroundColor,
     filled: true,
     border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(20),
       borderSide: const BorderSide(
         color: cardBorderColor,
       ),
     ),
     enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(20),
       borderSide: const BorderSide(
         color: cardBorderColor,
       ),
     ),
     focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(20),
       borderSide: const BorderSide(
         color: cardFocusBorderColor,
       ),
     ),
     focusedErrorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(20),
       borderSide: BorderSide(
         color: Colors.red[700]!,
       ),
     ),
     disabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(20),
       borderSide: const BorderSide(
         color: cardBorderColor,
       ),
