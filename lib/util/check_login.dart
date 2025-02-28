@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:petspaw_admin/features/login_screen.dart';
+import 'package:petspaw_admin/features/login/login_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void checkLogin(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const Color backgroundColor = Color(0xFFB5C2C9);
+const Color backgroundColor = Color(0xFFFFFFFF);
 const Color titleColor = Color(0xFF353535);
 const Color textColor = Color(0xFF353535);
 const Color mutedIconColor = Color(0xFFA1A1A1);
@@ -103,7 +103,6 @@ ThemeData appTheme = ThemeData(
       horizontal: 8,
     ),
     fillColor: cardBackgroundColor,
-    filled: true,
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(20),
       borderSide: const BorderSide(
