@@ -13,18 +13,6 @@ class Dashboard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Welcome section
-          const Text(
-            'Welcome back, Admin',
-            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Here\'s what\'s happening with your clinics today',
-            style: TextStyle(fontSize: 16, color: Colors.grey),
-          ),
-          const SizedBox(height: 32),
-
           Wrap(
             children: [
               StatCard(
@@ -64,7 +52,6 @@ class Dashboard extends StatelessWidget {
 
           const SizedBox(height: 32),
 
-          // Recent activity section
           Row(
             children: const [
               Text(
@@ -82,12 +69,10 @@ class Dashboard extends StatelessWidget {
           ),
           const SizedBox(height: 16),
 
-          // Activity timeline
           const ActivityTimeline(),
 
           const SizedBox(height: 32),
 
-          // Clinic cards
           Row(
             children: const [
               Text(

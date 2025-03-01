@@ -32,8 +32,8 @@ class ActivityTimeline extends StatelessWidget {
           icon: Icons.warning_amber,
         ),
         TimelineItem(
-          title: 'New review received',
-          description: 'Happy Tails Clinic received a 5-star review',
+          title: 'Appointment rate',
+          description: 'Happy to see our paw pets are safe and hydrated',
           time: '5 hours ago',
           color: Color(0xFFEC407A),
           icon: Icons.star,
