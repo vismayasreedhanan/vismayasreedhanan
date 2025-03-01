@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(() {
       setState(() {
         _currentIndex = _tabController.index;
@@ -134,16 +134,16 @@ class _HomeScreenState extends State<HomeScreen>
                   // SizedBox(
                   //   height: 10,
                   // ),
-                  SidebarItem(
-                    icon: Icons.event,
-                    label: "Appointments",
-                    index: 3,
-                    currentIndex: _currentIndex,
-                    onTap: () => setState(() {
-                      _currentIndex = 3;
-                      _tabController.animateTo(3);
-                    }),
-                  ),
+                  // SidebarItem(
+                  //   icon: Icons.event,
+                  //   label: "Appointments",
+                  //   index: 3,
+                  //   currentIndex: _currentIndex,
+                  //   onTap: () => setState(() {
+                  //     _currentIndex = 3;
+                  //     _tabController.animateTo(3);
+                  //   }),
+                  // ),
                 ],
               ),
             ),

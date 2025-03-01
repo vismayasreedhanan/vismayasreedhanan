@@ -6,6 +6,7 @@ import 'package:petspaw_admin/util/value_validator.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -15,9 +16,9 @@ class LoginScreen extends StatelessWidget {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/paw_background.jpg"),
+                image: AssetImage("assets/pet.jpg"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -29,6 +30,14 @@ class LoginScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2), // Shadow color
+                    blurRadius: 10, // Softness of the shadow
+                    spreadRadius: 2, // Spread of the shadow
+                    offset: const Offset(0, 4), // Shadow position
+                  ),
+                ],
               ),
               child: Padding(
                 padding:
@@ -36,48 +45,53 @@ class LoginScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Login",
-                        style: TextStyle(
-                            fontSize: 26, fontWeight: FontWeight.bold)),
-                    SizedBox(
-                      height: 5,
+                    const Text(
+                      "Login",
+                      style:
+                          TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
                     ),
-                    Text(
+                    const SizedBox(height: 5),
+                    const Text(
                       'Petspaw Admin',
                       style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.normal),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     CustomTextFormField(
-                        labelText: 'Email',
-                        controller: _emailController,
-                        validator: emailValidator,
-                        isLoading: false),
-                    SizedBox(height: 25),
+                      labelText: 'Email',
+                      controller: _emailController,
+                      validator: emailValidator,
+                      isLoading: false,
+                    ),
+                    const SizedBox(height: 25),
                     CustomTextFormField(
-                        labelText: 'Password',
-                        controller: _passwordController,
-                        validator: notEmptyValidator,
-                        isLoading: false),
-                    SizedBox(height: 10),
+                      labelText: 'Password',
+                      controller: _passwordController,
+                      validator: notEmptyValidator,
+                      isLoading: false,
+                    ),
+                    const SizedBox(height: 10),
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
-                          onPressed: () {}, child: Text('Forget Password?')),
+                        onPressed: () {},
+                        child: const Text('Forget Password?'),
+                      ),
                     ),
-                    SizedBox(height: 10),
-                    Spacer(),
+                    const SizedBox(height: 10),
+                    const Spacer(),
                     CustomButton(
                       inverse: true,
                       onPressed: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomeScreen(),
-                            ));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomeScreen(),
+                          ),
+                        );
                       },
                       label: 'Login',
-                    )
+                    ),
                   ],
                 ),
               ),
