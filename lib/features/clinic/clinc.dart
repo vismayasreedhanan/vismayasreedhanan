@@ -1,8 +1,10 @@
+import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:petspaw_admin/common_widget/custom_button.dart';
 import 'package:petspaw_admin/common_widget/custom_search.dart';
 import 'package:petspaw_admin/features/clinic/add_clinic.dart';
-import 'package:petspaw_admin/features/dashboard/modern_clinic_card.dart';
+
+import '../../theme/app_theme.dart';
 
 class Clinics extends StatelessWidget {
   const Clinics({super.key});
@@ -15,11 +17,26 @@ class Clinics extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          SizedBox(
+            height: 20,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              CustomSearch(
-                onSearch: (p0) {},
+              Expanded(
+                child: Text(
+                  'Clinics',
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: primaryColor,
+                      ),
+                ),
+              ),
+              SizedBox(
+                width: 300,
+                child: CustomSearch(
+                  onSearch: (p0) {},
+                ),
               ),
               SizedBox(
                 width: 10,
@@ -38,41 +55,77 @@ class Clinics extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 30,
+            height: 20,
           ),
-          Center(
-            child: SizedBox(
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  ModernClinicCard(
-                    name: 'PawCare Central',
-                    location: '123 Main St, New York, NY',
-                    rating: 4.8,
-                    status: 'active',
-                    appointments: 35,
-                    imageUrl:
-                        'https://www.reidmiddleton.com/wp-content/uploads/2016/09/Project-HeroImage01-DoctorsClinic1.jpg',
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border:
+                    Border.all(color: Theme.of(context).colorScheme.outline),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Expanded(
+                child: DataTable2(
+                  columnSpacing: 12,
+                  horizontalMargin: 12,
+                  minWidth: 600,
+                  columns: [
+                    DataColumn(label: Text('ID')),
+                    DataColumn(label: Text('Name')),
+                    DataColumn(label: Text('Email')),
+                    DataColumn(label: Text('Phone')),
+                    DataColumn(
+                        label: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text('Actions'))),
+                  ],
+                  rows: List<DataRow>.generate(
+                    10,
+                    (index) => DataRow(
+                      cells: [
+                        DataCell(Text('ID_$index')),
+                        DataCell(Text('Clinic $index')),
+                        DataCell(Text('clinic$index@example.com')),
+                        DataCell(Text('123-456-7890')),
+                        DataCell(
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  // Edit action
+                                },
+                                child: Text(
+                                  'Edit',
+                                  style: TextStyle(color: Color(0xFFFFA94D)),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  // Delete action
+                                },
+                                child: Text(
+                                  'Delete',
+                                  style: TextStyle(color: Color(0xFFFF6B6B)),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  // View details action
+                                },
+                                child: Text(
+                                  'View',
+                                  style: TextStyle(color: Color(0xFF6EC5FF)),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  ModernClinicCard(
-                    name: 'Happy Tails Clinic',
-                    location: '456 Park Ave, Boston, MA',
-                    rating: 4.6,
-                    status: 'active',
-                    appointments: 24,
-                    imageUrl:
-                        'https://www.reidmiddleton.com/wp-content/uploads/2016/09/Project-HeroImage01-DoctorsClinic1.jpg',
-                  ),
-                  ModernClinicCard(
-                    name: 'Pet Wellness Center',
-                    location: '789 Oak Rd, Chicago, IL',
-                    rating: 4.9,
-                    status: 'inactive',
-                    appointments: 54,
-                    imageUrl:
-                        'https://www.reidmiddleton.com/wp-content/uploads/2016/09/Project-HeroImage01-DoctorsClinic1.jpg',
-                  ),
-                ],
+                ),
               ),
             ),
           ),

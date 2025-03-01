@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:petspaw_admin/features/clinic/clinc.dart';
 import 'package:petspaw_admin/features/dashboard/dashboard.dart';
-import 'package:petspaw_admin/features/staff/staff.dart';
+import 'package:petspaw_admin/features/petstore/petstores.dart';
 import 'package:petspaw_admin/theme/app_theme.dart';
-import '../appointment/appointments.dart';
+import 'package:petspaw_admin/util/check_login.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../common_widget/change_password.dart';
+import '../../common_widget/custom_alert_dialog.dart';
+import '../login/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,16 +19,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  int _currentIndex = 0;
-
   @override
   void initState() {
+    checkLogin(context);
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(() {
-      setState(() {
-        _currentIndex = _tabController.index;
-      });
+      setState(() {});
     });
   }
 
@@ -37,19 +38,13 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: Row(
         children: [
           Container(
-            width: 220,
+            width: 250,
             decoration: BoxDecoration(
-              color: primaryColor,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 10,
-                  offset: Offset(2, 0),
-                ),
-              ],
+              color: Color(0xFFFDFDFD),
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -66,9 +61,10 @@ class _HomeScreenState extends State<HomeScreen>
                       const Text(
                         'PETSPAW',
                         style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: secondaryColor),
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor,
+                        ),
                       ),
                       SizedBox(
                         width: 15,
@@ -85,10 +81,8 @@ class _HomeScreenState extends State<HomeScreen>
                   SidebarItem(
                     icon: Icons.dashboard,
                     label: "Dashboard",
-                    index: 0,
-                    currentIndex: _currentIndex,
+                    isActive: _tabController.index == 0,
                     onTap: () => setState(() {
-                      _currentIndex = 0;
                       _tabController.animateTo(0);
                     }),
                   ),
@@ -96,12 +90,10 @@ class _HomeScreenState extends State<HomeScreen>
                     height: 10,
                   ),
                   SidebarItem(
-                    icon: Icons.business,
+                    icon: Icons.local_hospital,
                     label: "Clinics",
-                    index: 1,
-                    currentIndex: _currentIndex,
+                    isActive: _tabController.index == 1,
                     onTap: () => setState(() {
-                      _currentIndex = 1;
                       _tabController.animateTo(1);
                     }),
                   ),
@@ -109,41 +101,56 @@ class _HomeScreenState extends State<HomeScreen>
                     height: 10,
                   ),
                   SidebarItem(
-                    icon: Icons.people,
-                    label: "Staff",
-                    index: 2,
-                    currentIndex: _currentIndex,
+                    icon: Icons.store,
+                    label: "Pet Store",
+                    isActive: _tabController.index == 2,
                     onTap: () => setState(() {
-                      _currentIndex = 2;
                       _tabController.animateTo(2);
                     }),
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  // SidebarItem(
-                  //   icon: Icons.analytics,
-                  //   label: "Analytics",
-                  //   index: 3,
-                  //   currentIndex: _currentIndex,
-                  //   onTap: () => setState(() {
-                  //     _currentIndex = 3;
-                  //     _tabController.animateTo(3);
-                  //   }),
-                  // ),
-                  // SizedBox(
-                  //   height: 10,
-                  // ),
-                  // SidebarItem(
-                  //   icon: Icons.event,
-                  //   label: "Appointments",
-                  //   index: 3,
-                  //   currentIndex: _currentIndex,
-                  //   onTap: () => setState(() {
-                  //     _currentIndex = 3;
-                  //     _tabController.animateTo(3);
-                  //   }),
-                  // ),
+                  SidebarItem(
+                    icon: Icons.lock_outline_rounded,
+                    label: "Change Password",
+                    isActive: _tabController.index == 3,
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => const ChangePasswordDialog(),
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  SidebarItem(
+                      icon: Icons.logout_rounded,
+                      label: "Log Out",
+                      isActive: _tabController.index == 4,
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => CustomAlertDialog(
+                            title: "LOG OUT",
+                            content: const Text(
+                              "Are you sure you want to log out? Clicking 'Logout' will end your current session and require you to sign in again to access your account.",
+                            ),
+                            width: 400,
+                            primaryButton: "LOG OUT",
+                            onPrimaryPressed: () {
+                              Supabase.instance.client.auth.signOut();
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginScreen(),
+                                  ),
+                                  (route) => false);
+                            },
+                          ),
+                        );
+                      }),
                 ],
               ),
             ),
@@ -155,9 +162,7 @@ class _HomeScreenState extends State<HomeScreen>
               children: const [
                 Dashboard(),
                 Clinics(),
-                StaffManagementView(),
-                // AnalyticsView(),
-                AppointmentsView(),
+                Petstores(),
               ],
             ),
           ),
@@ -170,17 +175,15 @@ class _HomeScreenState extends State<HomeScreen>
 class SidebarItem extends StatelessWidget {
   final IconData icon;
   final String label;
-  final int index;
-  final int currentIndex;
+  final bool isActive;
   final VoidCallback onTap;
 
   const SidebarItem({
     super.key,
     required this.icon,
     required this.label,
-    required this.index,
-    required this.currentIndex,
     required this.onTap,
+    required this.isActive,
   });
 
   @override
@@ -189,18 +192,18 @@ class SidebarItem extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-            color: currentIndex == index
-                ? Colors.blueGrey.shade700
-                : Colors.transparent,
-            borderRadius: BorderRadius.circular(20)),
+            color: isActive ? primaryColor : Colors.transparent,
+            borderRadius: BorderRadius.circular(10)),
         padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         child: Row(
           children: [
-            Icon(icon, color: Colors.white, size: 24),
+            Icon(icon, color: isActive ? Colors.white : primaryColor, size: 24),
             SizedBox(width: 10),
             Text(
               label,
-              style: TextStyle(color: Colors.white, fontSize: 16),
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: isActive ? Colors.white : primaryColor,
+                  ),
             ),
           ],
         ),

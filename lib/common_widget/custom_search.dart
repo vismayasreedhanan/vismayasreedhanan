@@ -39,7 +39,7 @@ class _CustomSearchState extends State<CustomSearch> {
       width: 600,
       child: Material(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
           side: BorderSide(
             color: Theme.of(context).colorScheme.outline,
           ),

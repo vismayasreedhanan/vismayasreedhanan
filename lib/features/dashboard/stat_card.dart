@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:petspaw_admin/theme/app_theme.dart';
 
 class StatCard extends StatelessWidget {
   final String title;
   final String value;
-  final String trend;
+
   final bool isPositive;
   final IconData icon;
-  final Color color;
 
   const StatCard({
     super.key,
     required this.title,
     required this.value,
-    required this.trend,
     required this.isPositive,
     required this.icon,
-    required this.color,
   });
 
   @override
@@ -25,15 +23,8 @@ class StatCard extends StatelessWidget {
       child: Container(
         width: 200,
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          color: Color(0xffE0F4CE),
+          borderRadius: BorderRadius.circular(10),
         ),
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -46,12 +37,12 @@ class StatCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
+                    color: primaryColor,
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   child: Icon(
                     icon,
-                    color: color,
+                    color: Colors.white,
                     size: 24,
                   ),
                 ),
@@ -65,13 +56,12 @@ class StatCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            const SizedBox(height: 4),
             Text(
               title,
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[600],
-              ),
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
           ],
         ),
